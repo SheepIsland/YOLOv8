@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.1</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.iamvioletta</groupId>
+	<artifactId>YOLOv8</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>YOLOv8</name>
+	<description>TBD</description>
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<spring-boot.version>3.1.1</spring-boot.version>
+		<djl.version>0.16.0</djl.version>
+		<tensorflow.na.version>2.4.1</tensorflow.na.version>
+		<java.version>20</java.version>
+	</properties>
+	<dependencies>
+		<!-- Spring Boot dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- H2 database dependencies -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- DJL Core -->
+		<dependency>
+			<groupId>ai.djl</groupId>
+			<artifactId>api</artifactId>
+			<version>${djl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ai.djl</groupId>
+			<artifactId>basicdataset</artifactId>
+			<version>${djl.version}</version>
+		</dependency>
+		<!-- DJL Model Zoo -->
+		<dependency>
+			<groupId>ai.djl</groupId>
+			<artifactId>model-zoo</artifactId>
+			<version>${djl.version}</version>
+		</dependency>
+		<!-- DJL TensorFlow Engine -->
+		<dependency>
+			<groupId>ai.djl.tensorflow</groupId>
+			<artifactId>tensorflow-engine</artifactId>
+			<version>${djl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ai.djl.tensorflow</groupId>
+			<artifactId>tensorflow-api</artifactId>
+			<version>${djl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.tensorflow</groupId>
+			<artifactId>tensorflow-core-platform</artifactId>
+			<version>0.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.tensorflow</groupId>
+			<artifactId>tensorflow</artifactId>
+			<version>1.15.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ai.djl.pytorch</groupId>
+			<artifactId>pytorch-engine</artifactId>
+			<version>${djl.version}</version>
+		</dependency>
+		<!-- DJL dependencies ?????-->
+		<dependency>
+			<groupId>ai.djl.tensorflow</groupId>
+			<artifactId>tensorflow-native-auto</artifactId>
+			<version>${tensorflow.na.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
