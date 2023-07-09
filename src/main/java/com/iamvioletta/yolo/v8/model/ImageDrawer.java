@@ -1,4 +1,4 @@
-package com.iamvioletta.yolov8;
+package com.iamvioletta.yolo.v8.model;
 
 import ai.djl.modality.cv.output.BoundingBox;
 import ai.djl.modality.cv.output.DetectedObjects;
@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class YOLOImageUtils {
+public class ImageDrawer {
 
     private static Color randomColor() {
         return new Color(RandomUtils.nextInt(255));
@@ -21,9 +21,6 @@ public class YOLOImageUtils {
         int stroke = 2;
         g.setStroke(new BasicStroke(stroke));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        int imageWidth = image.getWidth();
-        int imageHeight = image.getHeight();
 
         List<DetectedObjects.DetectedObject> list = detections.items();
         for (DetectedObjects.DetectedObject result : list) {

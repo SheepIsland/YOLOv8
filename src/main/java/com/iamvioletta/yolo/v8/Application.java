@@ -1,13 +1,13 @@
-package com.iamvioletta.yolov8;
+package com.iamvioletta.yolo.v8;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class YOLOv8Application {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(YOLOv8Application.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

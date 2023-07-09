@@ -1,10 +1,11 @@
-package com.iamvioletta.yolov8;
+package com.iamvioletta.yolo.v8;
 
 import ai.djl.ModelException;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.translate.TranslateException;
+import com.iamvioletta.yolo.v8.model.SimpleYoloPredictor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/detection")
-public class YOLOv8DetectionController {
+public class DetectionController {
 
     @Autowired
-    private YOLOv8Service yoloService;
+    private SimpleYoloPredictor yoloService;
 
     @PostMapping("/detect")
     public ResponseEntity<Map<String, Object>> detectObjects(@RequestParam("image") MultipartFile file) {

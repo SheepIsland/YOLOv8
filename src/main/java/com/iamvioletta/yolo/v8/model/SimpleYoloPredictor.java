@@ -1,8 +1,9 @@
-package com.iamvioletta.yolov8;
+package com.iamvioletta.yolo.v8.model;
 
 import ai.djl.MalformedModelException;
 import ai.djl.ModelException;
 import ai.djl.inference.Predictor;
+import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.modality.cv.transform.Resize;
@@ -25,13 +26,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class YOLOv8Service {
+public class SimpleYoloPredictor implements YoloPredictor {
     private static final int IMAGE_SIZE = 640;
 
     private ZooModel<Image, DetectedObjects> model;
     private Predictor<Image, DetectedObjects> predictor;
 
-    public YOLOv8Service () throws IOException, ModelNotFoundException, MalformedModelException {
+    public SimpleYoloPredictor() throws IOException, ModelNotFoundException, MalformedModelException {
         Pipeline pipeline = new Pipeline();
         pipeline.add(new Resize(IMAGE_SIZE));
         pipeline.add(new ToTensor());
@@ -56,16 +57,21 @@ public class YOLOv8Service {
         predictor = model.newPredictor();
     }
 
+    @Override
     public DetectedObjects detectObjects(Image image) throws IOException, ModelException, TranslateException {
         DetectedObjects results = predictor.predict(image);
         System.out.println(results);
 
         Path outputDir = Paths.get("build/output");
         Files.createDirectories(outputDir);
-        YOLOImageUtils.drawBoundingBoxes((BufferedImage) image.getWrappedImage(),results);
+        ImageDrawer.drawBoundingBoxes((BufferedImage) image.getWrappedImage(),results);
         Path imagePath = outputDir.resolve("detected-DSC00020_0.png");
         image.save(Files.newOutputStream(imagePath), "png");
 
         return results;
+    }
+
+    public Classifications classifyObjects(Image image) throws IOException, ModelException, TranslateException {
+        return null;
     }
 }
