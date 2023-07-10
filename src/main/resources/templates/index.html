@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YOLOv8 Object Detection</title>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>YOLOv8 Object Detection</h1>
+<input type="file" id="imageFile">
+<button onclick="uploadImage()">Upload</button>
+<div id="result"></div>
+
+<script>
+    function uploadImage() {
+        let fileInput = document.getElementById('imageFile');
+        let file = fileInput.files[0];
+
+        if (!file) {
+            alert('Please select an image file.');
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append('image', file);
+
+        fetch('/api/detection/detect', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => displayResult(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    function displayResult(data) {
+        let resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '';
+
+        if (data.error) {
+            resultDiv.innerText = 'Error: ' + data.error;
+        } else {
+            let predictions = data.predictions;
+            if (predictions.length > 0) {
+                let resultText = 'Predictions:\n';
+                for (let prediction of predictions) {
+                    resultText += `${prediction.getClassName()}: ${prediction.getProbability()}\n`;
+                }
+                resultDiv.innerText = resultText;
+            } else {
+                resultDiv.innerText = 'No objects detected.';
+            }
+        }
+    }
+</script>
+</body>
+</html>
