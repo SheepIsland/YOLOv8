@@ -5,6 +5,13 @@
 - Open source [ai.djl ](https://djl.ai/) library to build and deploy DL in Java.
 - [Spring Boot](https://spring.io/projects/spring-boot) for creating REST API application.
 - [Docker container](https://www.docker.com/resources/what-container/).
+## <div align="center">REST API</div>
+
+
+POST 
+
+ENDPOINT http://localhost:8080/api/detection/detect
+
 
 ## <div align="center">Documentation</div>
 

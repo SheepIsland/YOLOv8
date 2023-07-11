@@ -7,7 +7,6 @@ import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.translate.TranslateException;
 import com.iamvioletta.yolo.v8.dl.YoloDetector;
 import com.iamvioletta.yolo.v8.utils.ImageConverter;
-import com.iamvioletta.yolo.v8.utils.ImageDrawer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 
 import java.util.Map;
 
+/**
+ * Controller for applying yolov8 model.
+ */
 @RestController
 @RequestMapping("/api/detection")
 public class DetectionController {
@@ -30,6 +31,9 @@ public class DetectionController {
     @Autowired
     private YoloDetector yoloService;
 
+    /**
+     *   Detect objects on image, path to image is required.
+     */
     @PostMapping("/detect")
     public ResponseEntity<Map<String, Object>> detectObjects(@RequestParam("image") MultipartFile file) {
         Map<String, Object> response = new HashMap<>();

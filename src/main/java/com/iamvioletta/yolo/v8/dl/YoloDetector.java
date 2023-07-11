@@ -19,13 +19,15 @@ import com.iamvioletta.yolo.v8.utils.ImageDrawer;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
 public class YoloDetector implements Detector {
     private static final int IMAGE_SIZE = 640;
+    private static final String SYSNET = "coco.names";
+    private static final float MODEL_THRESHOLD = 0.3f;
+    private static final String MODEL_PATH = "build/yolov8";
+    private static final String MODEL_NAME = "best.torchscript";
 
     private ZooModel<Image, DetectedObjects> model;
     private ai.djl.inference.Predictor<Image, DetectedObjects> predictor;
@@ -35,18 +37,19 @@ public class YoloDetector implements Detector {
         pipeline.add(new Resize(IMAGE_SIZE));
         pipeline.add(new ToTensor());
 
+        // Model Translator
         Translator<Image, DetectedObjects> translator =  YoloV5Translator
                 .builder()
                 .setPipeline(pipeline)
-                .optSynsetArtifactName("coco.names")
-                .optThreshold(0.3f)
+                .optSynsetArtifactName(SYSNET)
+                .optThreshold(MODEL_THRESHOLD)
                 .build();
 
         // Model Criteria
         Criteria<Image, DetectedObjects> criteria = Criteria.builder()
                 .setTypes(Image.class, DetectedObjects.class)
-                .optModelUrls(Paths.get("build/yolov8").toFile().getPath())
-                .optModelName("best.torchscript")
+                .optModelUrls(Paths.get(MODEL_PATH).toFile().getPath())
+                .optModelName(MODEL_NAME)
                 .optTranslator(translator)
                 .optProgress(new ProgressBar())
                 .build();
