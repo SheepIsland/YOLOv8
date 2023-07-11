@@ -15,7 +15,10 @@ import ai.djl.training.util.ProgressBar;
 import ai.djl.translate.Pipeline;
 import ai.djl.translate.TranslateException;
 import ai.djl.translate.Translator;
+import com.iamvioletta.yolo.v8.controller.DetectionController;
 import com.iamvioletta.yolo.v8.utils.ImageDrawer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,6 +26,8 @@ import java.nio.file.Paths;
 
 @Service
 public class YoloDetector implements Detector {
+    private final Logger logger = LoggerFactory.getLogger(DetectionController.class);
+
     private static final int IMAGE_SIZE = 640;
     private static final String SYSNET = "coco.names";
     private static final float MODEL_THRESHOLD = 0.3f;
@@ -55,13 +60,14 @@ public class YoloDetector implements Detector {
                 .build();
 
         model = ModelZoo.loadModel(criteria);
+        logger.debug("Yolov8 model is created");
         predictor = model.newPredictor();
     }
 
     @Override
     public DetectedObjects detectObjects(Image image) throws IOException, ModelException, TranslateException {
         DetectedObjects results = predictor.predict(image);
-        System.out.println(results);
+        logger.info("Detected objects: " + results);
         ImageDrawer.drawBoundingBoxes(image,results);
         return results;
     }

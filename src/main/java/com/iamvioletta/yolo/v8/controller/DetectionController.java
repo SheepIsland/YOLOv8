@@ -54,11 +54,11 @@ public class DetectionController {
 
             Image image = ImageFactory.getInstance().fromFile(tempFile);
             DetectedObjects predictions = yoloService.detectObjects(image);
-            logger.debug("Performed object detection");
+            logger.info("Performed object detection");
 
             Path detectedImage = Files.createTempFile("detected", file.getOriginalFilename());
             image.save(Files.newOutputStream(detectedImage), "png");
-            logger.info("Performed objects detection and saved detected image to a temporary location: "
+            logger.debug("Saved detected image to a temporary location: "
                     + detectedImage);
 
             response.put("detected", predictions.toJson());
