@@ -39,7 +39,7 @@ public class TestYoloDetector implements Detector {
                return 0;
            }
        });
-            // Return a dummy DetectedObjects instance for testing
+       // Return a dummy DetectedObjects instance for testing
         return new DetectedObjects(classes, probabilities, boundingBoxes);
     }
 }
