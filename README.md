@@ -7,11 +7,29 @@
 - [Docker container](https://www.docker.com/resources/what-container/).
 ## <div align="center">REST API</div>
 
+#### Detection objects on image
 
-POST 
+<details>
+  <summary><code>POST</code> <code><b>/{image}</b></code> <code>(detect objects on image using yolov8 pretrained model)</code></summary>
 
-ENDPOINT http://localhost:8080/api/detection/detect
+##### Parameters
 
+> | name    |  type     | data type | description                          |
+> |---------|-----------|-----------|--------------------------------------|
+> | `image` |  required | string    | The image file path in your local fs |
+
+##### Responses
+
+> | http code | content-type                      | response                                                                                                         |
+> |-----------|-----------------------------------|------------------------------------------------------------------------------------------------------------------|
+> | `200`     | `text/plain;charset=UTF-8`        | `{"detected": classname of objects and probability, "base64Image": base64 encoded image with detected objects}"` |
+> | `400`     | `application/json`                | `{"code":"400","message":"Bad Request"}`                                                                         | |
+
+##### Example cURL
+
+> ```javascript
+>  curl -X POST -H "Content-Type: application/json" --data @post.json http://localhost:8080/api/detection/detect
+> ```
 
 ## <div align="center">Documentation</div>
 
@@ -43,7 +61,8 @@ See below for a quickstart installation and usage example.
 <details open>
 <summary>Usage</summary>
 
-Go to http://localhost:8080 and upload an image.
+1. Via REST API or
+2. Web UI: http://localhost:8080.
 
 ![yolov8](yolov8.png)
 </details>
