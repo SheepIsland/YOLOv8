@@ -31,6 +31,8 @@
 >  curl -X POST -H "Content-Type: application/json" --data @post.json http://localhost:8080/api/detection/detect
 > ```
 
+</details>
+
 ## <div align="center">Documentation</div>
 
 See below for a quickstart installation and usage example.
