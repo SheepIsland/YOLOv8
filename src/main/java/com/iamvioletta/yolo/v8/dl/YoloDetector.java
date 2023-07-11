@@ -2,6 +2,7 @@ package com.iamvioletta.yolo.v8.dl;
 
 import ai.djl.MalformedModelException;
 import ai.djl.ModelException;
+import ai.djl.inference.Predictor;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.modality.cv.transform.Resize;
@@ -34,8 +35,8 @@ public class YoloDetector implements Detector {
     private static final String MODEL_PATH = "build/yolov8";
     private static final String MODEL_NAME = "best.torchscript";
 
-    private ZooModel<Image, DetectedObjects> model;
-    private ai.djl.inference.Predictor<Image, DetectedObjects> predictor;
+    private final ZooModel<Image, DetectedObjects> model;
+    private final Predictor<Image, DetectedObjects> predictor;
 
     public YoloDetector() throws IOException, ModelNotFoundException, MalformedModelException {
         Pipeline pipeline = new Pipeline();

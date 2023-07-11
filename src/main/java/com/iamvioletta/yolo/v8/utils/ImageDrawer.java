@@ -17,21 +17,21 @@ public class ImageDrawer {
     }
 
     public static void drawBoundingBoxes(Image image, DetectedObjects detections) {
-        BufferedImage bImage = (BufferedImage) image.getWrappedImage();
+        final BufferedImage bImage = (BufferedImage) image.getWrappedImage();
 
         Graphics2D g = (Graphics2D) bImage.getGraphics();
-        int stroke = 2;
+        final int stroke = 2;
         g.setStroke(new BasicStroke(stroke));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        List<DetectedObjects.DetectedObject> list = detections.items();
+        final List<DetectedObjects.DetectedObject> list = detections.items();
         for (DetectedObjects.DetectedObject result : list) {
-            BoundingBox box = result.getBoundingBox();
+            final BoundingBox box = result.getBoundingBox();
             g.setPaint(randomColor().darker());
-            String label = labelOnDetectedObject(result);
-            Rectangle rectangle = box.getBounds();
-            int x = (int) (rectangle.getX()) ;
-            int y = (int) (rectangle.getY());
+            final String label = labelOnDetectedObject(result);
+            final Rectangle rectangle = box.getBounds();
+            final int x = (int) (rectangle.getX()) ;
+            final int y = (int) (rectangle.getY());
             g.drawRect(
                     x,
                     y,
@@ -43,13 +43,13 @@ public class ImageDrawer {
     }
     private static String labelOnDetectedObject(DetectedObjects.DetectedObject result) {
         StringBuilder labelOnDetectedObject = new StringBuilder();
-        String className = result.getClassName();
-        Double probability = result.getProbability();
+        final String className = result.getClassName();
+        final Double probability = result.getProbability();
         labelOnDetectedObject.append(className).append(" ").append(probability);
         return labelOnDetectedObject.toString();
     }
     private static void drawText(Graphics2D g, String text, int x, int y, int stroke, int padding) {
-        FontMetrics metrics = g.getFontMetrics();
+       FontMetrics metrics = g.getFontMetrics();
         x += stroke / 2;
         y += stroke / 2;
         int width = metrics.stringWidth(text) + padding * 2 - stroke / 2;
