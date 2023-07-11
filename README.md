@@ -35,8 +35,9 @@ See below for a quickstart installation and usage example.
 
 <details open>
 <summary>Usage</summary>
-1. Go to http://localhost:8080/
-2.
+
+Go to http://localhost:8080 and upload an image.
+
 ![yolov8](yolov8.png)
 </details>
 
