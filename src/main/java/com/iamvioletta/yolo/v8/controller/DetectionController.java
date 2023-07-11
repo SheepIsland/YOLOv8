@@ -7,6 +7,8 @@ import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.translate.TranslateException;
 import com.iamvioletta.yolo.v8.dl.YoloDetector;
 import com.iamvioletta.yolo.v8.utils.ImageConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/detection")
 public class DetectionController {
+    private final Logger logger = LoggerFactory.getLogger(DetectionController.class);
 
     @Autowired
     private YoloDetector yoloService;
@@ -39,28 +42,29 @@ public class DetectionController {
         Map<String, Object> response = new HashMap<>();
 
         if (file.isEmpty()) {
+            logger.error("Image file is empty");
             response.put("error", "Image file is required");
             return ResponseEntity.badRequest().body(response);
         }
 
         try {
-            // Save the uploaded file to a temporary location
             Path tempFile = Files.createTempFile("upload", file.getOriginalFilename());
             Files.copy(file.getInputStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
+            logger.debug("Saved the uploaded image to a temporary location: " + tempFile);
 
-            // Load and preprocess the image
             Image image = ImageFactory.getInstance().fromFile(tempFile);
-
-            // Perform object detection
             DetectedObjects predictions = yoloService.detectObjects(image);
+            logger.debug("Performed object detection");
 
-            // Save detected image
             Path detectedImage = Files.createTempFile("detected", file.getOriginalFilename());
             image.save(Files.newOutputStream(detectedImage), "png");
+            logger.info("Performed objects detection and saved detected image to a temporary location: "
+                    + detectedImage);
 
-            // Return the predictions in the response
             response.put("detected", predictions.toJson());
             response.put("base64Image", ImageConverter.base64Encode(detectedImage));
+            logger.info("Created a response entity");
+
             return ResponseEntity.ok(response);
         } catch (IOException | TranslateException e) {
             response.put("error", "Failed to process the image: " + e);
