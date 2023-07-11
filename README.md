@@ -7,6 +7,7 @@
 - [Docker container](https://www.docker.com/resources/what-container/).
 ## <div align="center">REST API</div>
 
+
 #### Detection objects on image
 
 <details>
@@ -20,10 +21,35 @@
 
 ##### Responses
 
-> | http code | content-type                      | response                                                                                                         |
-> |-----------|-----------------------------------|------------------------------------------------------------------------------------------------------------------|
-> | `200`     | `text/plain;charset=UTF-8`        | `{"detected": classname of objects and probability, "base64Image": base64 encoded image with detected objects}"` |
-> | `400`     | `application/json`                | `{"code":"400","message":"Bad Request"}`                                                                         | |
+> | http code | content-type                      | response                                                                                                                                      |
+> |-----------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+> | `200`     | `text/plain;charset=UTF-8`        | `{"detected": json with detected objects and their classnames and probabilities, "base64Image": base64 encoded image with detected objects}"` |
+> | `400`     | `application/json`                | `{"code":"400","message":"Bad Request"}`                                                                                                      | |
+
+##### Example cURL
+
+> ```javascript
+>  curl -X POST -H "Content-Type: application/json" --data @post.json http://localhost:8080
+> ```
+
+</details>
+
+#### Helper
+
+<details>
+  <summary><code>GET</code> <code><b>/{api-docs}</b></code> <code>(REST API documentation)</code></summary>
+
+##### Parameters
+
+> | name  |  type     | data type             | description |
+> |-------|-----------|-----------------------|-------------|
+> | None  |  required | object (JSON or YAML) | N/A         |
+
+##### Responses
+
+> | http code | content-type                      | response                                 |
+> |-----------|-----------------------------------|------------------------------------------|
+> | `200`     | `text/plain;charset=UTF-8`        | `Json with documented REST API`          |
 
 ##### Example cURL
 
