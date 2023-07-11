@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>YOLOv8 Object Detection</title>
-    <style>
-        /* Add some basic styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        #result {
-            margin-top: 20px;
-        }
-    </style>
+    <meta charset = "ISO-8859-1" />
+    <link href = "css/styles.css" rel = "stylesheet"/>
+    <title>Yolo v8 Objects Detection</title>
 </head>
 <body>
-<h1>YOLOv8 Object Detection</h1>
+<h1>Yolo v8 Objects Detection</h1>
 <input type="file" id="imageFile">
-<button onclick="uploadImage()">Upload</button>
+<button id="uploadButton" onclick="uploadImage()">Upload</button>
 <div id="result"></div>
 
 <script>
     function uploadImage() {
+        // Loading image
         let fileInput = document.getElementById('imageFile');
         let file = fileInput.files[0];
 
@@ -37,33 +25,47 @@
         let formData = new FormData();
         formData.append('image', file);
 
+        // Display loading message
+        let resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '<p class="loading">Processing your request...</p>';
+
         fetch('/api/detection/detect', {
             method: 'POST',
             body: formData
         })
             .then(response => response.json())
-            .then(data => displayResult(data))
-            .catch(error => console.error('Error:', error));
+            .then(data => {
+                console.log(data);
+                decodeImage(data, resultDiv);
+                parseDetectedClasses(data, resultDiv);
+            }).catch(error => console.error('Error:', error));
     }
 
-    function displayResult(data) {
-        let resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = '';
+    function parseDetectedClasses(data, resultDiv) {
+        const parsedResponse = JSON.parse(data.detected);
 
-        if (data.error) {
-            resultDiv.innerText = 'Error: ' + data.error;
-        } else {
-            let predictions = data.predictions;
-            if (predictions.length > 0) {
-                let resultText = 'Predictions:\n';
-                for (let prediction of predictions) {
-                    resultText += `${prediction.getClassName()}: ${prediction.getProbability()}\n`;
-                }
-                resultDiv.innerText = resultText;
-            } else {
-                resultDiv.innerText = 'No objects detected.';
-            }
-        }
+        parsedResponse.forEach(function(element) {
+            const className = element.className;
+            const probability = element.probability;
+
+            const classNameTextNode = document.createTextNode(
+                '[className: ' + className + ', probability: ' + probability + ']');
+            resultDiv.appendChild(classNameTextNode);
+            resultDiv.appendChild(document.createElement('br'));
+        });
+    }
+
+    function decodeImage(data, resultDiv) {
+        const base64Image = 'data:image/jpeg;base64,'+data.base64Image;
+        const img = new Image();
+        img.src = base64Image;
+        img.onload = function() {
+            console.log("The image has been successfully loaded and decoded.");
+            resultDiv.appendChild(img);
+        };
+        img.onerror = function() {
+            console.error('Error decoding the Base64 image');
+        };
     }
 </script>
 </body>

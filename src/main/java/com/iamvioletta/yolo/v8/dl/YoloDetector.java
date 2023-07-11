@@ -1,9 +1,7 @@
-package com.iamvioletta.yolo.v8.model;
+package com.iamvioletta.yolo.v8.dl;
 
 import ai.djl.MalformedModelException;
 import ai.djl.ModelException;
-import ai.djl.inference.Predictor;
-import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.modality.cv.transform.Resize;
@@ -17,22 +15,22 @@ import ai.djl.training.util.ProgressBar;
 import ai.djl.translate.Pipeline;
 import ai.djl.translate.TranslateException;
 import ai.djl.translate.Translator;
+import com.iamvioletta.yolo.v8.utils.ImageDrawer;
 import org.springframework.stereotype.Service;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class SimpleYoloPredictor implements YoloPredictor {
+public class YoloDetector implements Detector {
     private static final int IMAGE_SIZE = 640;
 
     private ZooModel<Image, DetectedObjects> model;
-    private Predictor<Image, DetectedObjects> predictor;
+    private ai.djl.inference.Predictor<Image, DetectedObjects> predictor;
 
-    public SimpleYoloPredictor() throws IOException, ModelNotFoundException, MalformedModelException {
+    public YoloDetector() throws IOException, ModelNotFoundException, MalformedModelException {
         Pipeline pipeline = new Pipeline();
         pipeline.add(new Resize(IMAGE_SIZE));
         pipeline.add(new ToTensor());
@@ -61,17 +59,7 @@ public class SimpleYoloPredictor implements YoloPredictor {
     public DetectedObjects detectObjects(Image image) throws IOException, ModelException, TranslateException {
         DetectedObjects results = predictor.predict(image);
         System.out.println(results);
-
-        Path outputDir = Paths.get("build/output");
-        Files.createDirectories(outputDir);
-        ImageDrawer.drawBoundingBoxes((BufferedImage) image.getWrappedImage(),results);
-        Path imagePath = outputDir.resolve("detected-DSC00020_0.png");
-        image.save(Files.newOutputStream(imagePath), "png");
-
+        ImageDrawer.drawBoundingBoxes(image,results);
         return results;
-    }
-
-    public Classifications classifyObjects(Image image) throws IOException, ModelException, TranslateException {
-        return null;
     }
 }

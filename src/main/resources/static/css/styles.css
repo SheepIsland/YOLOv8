@@ -1,0 +1,35 @@
+h1 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+#imageFile {
+    margin-right: 10px;
+}
+
+#uploadButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#uploadButton:hover {
+    background-color: #45a049;
+}
+
+#result {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #dddddd;
+}
+
+#result .error {
+    color: red;
+}
+
+#result .predictions {
+    color: #333333;
+}

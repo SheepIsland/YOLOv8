@@ -1,8 +1,9 @@
-package com.iamvioletta.yolo.v8.model;
+package com.iamvioletta.yolo.v8.utils;
 
 import ai.djl.modality.cv.output.BoundingBox;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.modality.cv.output.Rectangle;
+import ai.djl.modality.cv.Image;
 import ai.djl.util.RandomUtils;
 
 import java.awt.*;
@@ -15,8 +16,10 @@ public class ImageDrawer {
         return new Color(RandomUtils.nextInt(255));
     }
 
-    public static void drawBoundingBoxes(BufferedImage image, DetectedObjects detections) {
-        Graphics2D g = (Graphics2D) image.getGraphics();
+    public static void drawBoundingBoxes(Image image, DetectedObjects detections) {
+        BufferedImage bImage = (BufferedImage) image.getWrappedImage();
+
+        Graphics2D g = (Graphics2D) bImage.getGraphics();
         int stroke = 2;
         g.setStroke(new BasicStroke(stroke));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
