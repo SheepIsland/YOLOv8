@@ -10,7 +10,7 @@
 #### Detection objects on image
 
 <details>
-  <summary><code>POST</code> <code><b>/{image}</b></code> <code>(detect objects on image using yolov8 pretrained model)</code></summary>
+  <summary><code>POST</code> <code><b>/{api/detection/detect}</b></code> <code>(detect objects on image using yolov8 pretrained model)</code></summary>
 
 ##### Parameters
 
@@ -28,7 +28,7 @@
 ##### Example cURL
 
 > ```javascript
->  curl -X POST -H "Content-Type: application/json" --data @post.json http://localhost:8080/api/detection/detect
+>  curl -X POST -H "Content-Type: application/json" --data @post.json http://localhost:8080
 > ```
 
 </details>
