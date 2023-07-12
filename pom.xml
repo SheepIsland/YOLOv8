@@ -20,7 +20,7 @@
 		<spring-boot.version>3.1.1</spring-boot.version>
 		<djl.version>0.16.0</djl.version>
 		<tensorflow.na.version>2.4.1</tensorflow.na.version>
-		<java.version>17</java.version>
+		<java.version>20</java.version>
 	</properties>
 	<dependencies>
 		<!-- Spring Boot dependencies -->
