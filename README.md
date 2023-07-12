@@ -1,6 +1,6 @@
 # Yolov8 Server for detection objects.
 
-- Java 10+
+- Java 20
 - [YoloV8](https://github.com/ultralytics/ultralytics) pretrained model.
 - Open source [ai.djl ](https://djl.ai/) library to build and deploy DL in Java.
 - [Spring Boot](https://spring.io/projects/spring-boot) for creating REST API application.
