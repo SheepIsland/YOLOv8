@@ -20,14 +20,10 @@
 		<spring-boot.version>3.1.1</spring-boot.version>
 		<djl.version>0.16.0</djl.version>
 		<tensorflow.na.version>2.4.1</tensorflow.na.version>
-		<java.version>20</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<!-- Spring Boot dependencies -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -53,47 +49,17 @@
 			<artifactId>api</artifactId>
 			<version>${djl.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>ai.djl</groupId>
-			<artifactId>basicdataset</artifactId>
-			<version>${djl.version}</version>
-		</dependency>
 		<!-- DJL Model Zoo -->
 		<dependency>
 			<groupId>ai.djl</groupId>
 			<artifactId>model-zoo</artifactId>
 			<version>${djl.version}</version>
 		</dependency>
-		<!-- DJL TensorFlow Engine -->
-		<dependency>
-			<groupId>ai.djl.tensorflow</groupId>
-			<artifactId>tensorflow-engine</artifactId>
-			<version>${djl.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ai.djl.tensorflow</groupId>
-			<artifactId>tensorflow-api</artifactId>
-			<version>${djl.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.tensorflow</groupId>
-			<artifactId>tensorflow-core-platform</artifactId>
-			<version>0.5.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.tensorflow</groupId>
-			<artifactId>tensorflow</artifactId>
-			<version>1.15.0</version>
-		</dependency>
+		<!-- DJL Engine -->
 		<dependency>
 			<groupId>ai.djl.pytorch</groupId>
 			<artifactId>pytorch-engine</artifactId>
 			<version>${djl.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ai.djl.tensorflow</groupId>
-			<artifactId>tensorflow-native-auto</artifactId>
-			<version>${tensorflow.na.version}</version>
 		</dependency>
 		<!-- File utils -->
 		<dependency>
